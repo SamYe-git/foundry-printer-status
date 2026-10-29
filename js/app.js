@@ -10,6 +10,12 @@ const STATUS_LABELS = {
   offline: "OFFLINE",
 };
 
+// A finished print only shows as DONE for this long before it reverts to AVAILABLE.
+const DONE_DISPLAY_CAP_MIN = 15;
+
+// Re-renders on this interval so a DONE card can flip to AVAILABLE without a page reload.
+const RENDER_REFRESH_MS = 30000;
+
 // Turns a minute count into "H:MM" or "M:SS"-style text like the design (e.g. 42 -> "0:42").
 function formatTimeLeft(totalMinutes) {
   const hours = Math.floor(totalMinutes / 60);
@@ -17,9 +23,21 @@ function formatTimeLeft(totalMinutes) {
   return `${hours}:${String(minutes).padStart(2, "0")}`;
 }
 
-// Fills the printer "door" element with content based on the printer's state.
-function fillDoorContent(door, printer) {
-  if (printer.state === "printing") {
+// Returns the state a printer should display right now: a DONE printer past its 15-minute
+// cap reads as AVAILABLE, even though the data file still says "done".
+function getDisplayState(printer, now) {
+  if (printer.state === "done" && printer.doneAt) {
+    const elapsedMin = (now - new Date(printer.doneAt).getTime()) / 60000;
+    if (elapsedMin >= DONE_DISPLAY_CAP_MIN) {
+      return "available";
+    }
+  }
+  return printer.state;
+}
+
+// Fills the printer "door" element with content based on the printer's display state.
+function fillDoorContent(door, printer, displayState) {
+  if (displayState === "printing") {
     const ring = document.createElement("div");
     ring.className = "ring";
     ring.style.setProperty("--pct", printer.progress);
@@ -42,7 +60,7 @@ function fillDoorContent(door, printer) {
     return;
   }
 
-  if (printer.state === "done") {
+  if (displayState === "done") {
     const doneText = document.createElement("div");
     doneText.className = "done-text";
 
@@ -52,14 +70,13 @@ function fillDoorContent(door, printer) {
 
     const small = document.createElement("span");
     small.className = "small";
-    small.textContent = "waiting for pickup";
 
     doneText.append(big, small);
     door.append(doneText);
     return;
   }
 
-  if (printer.state === "paused") {
+  if (displayState === "paused") {
     const pausedText = document.createElement("div");
     pausedText.className = "paused-text";
 
@@ -84,7 +101,9 @@ function fillDoorContent(door, printer) {
 }
 
 // Builds one printer card element from a single printer's data.
-function buildPrinterCard(printer) {
+function buildPrinterCard(printer, now) {
+  const displayState = getDisplayState(printer, now);
+
   const card = document.createElement("div");
   card.className = "printer";
 
@@ -92,8 +111,8 @@ function buildPrinterCard(printer) {
   lid.className = "printer-lid";
 
   const statusTag = document.createElement("span");
-  statusTag.className = `status-tag ${printer.state}`;
-  statusTag.textContent = STATUS_LABELS[printer.state] ?? printer.state;
+  statusTag.className = `status-tag ${displayState}`;
+  statusTag.textContent = STATUS_LABELS[displayState] ?? displayState;
 
   const numberTag = document.createElement("span");
   numberTag.className = "number-tag";
@@ -103,7 +122,7 @@ function buildPrinterCard(printer) {
 
   const doorWrap = document.createElement("div");
   doorWrap.className = "printer-door";
-  fillDoorContent(doorWrap, printer);
+  fillDoorContent(doorWrap, printer, displayState);
 
   const screen = document.createElement("div");
   screen.className = "printer-screen";
@@ -117,22 +136,26 @@ function buildPrinterCard(printer) {
 }
 
 // Fills the three shelf rows with 3 printer cards each, in order.
-function renderShelf(printers) {
+function renderShelf(printers, now) {
   const rows = [
     document.getElementById("shelf-row-1"),
     document.getElementById("shelf-row-2"),
     document.getElementById("shelf-row-3"),
   ];
 
+  rows.forEach((row) => {
+    row.replaceChildren();
+  });
+
   printers.forEach((printer, index) => {
     const rowIndex = Math.floor(index / 3);
-    rows[rowIndex].append(buildPrinterCard(printer));
+    rows[rowIndex].append(buildPrinterCard(printer, now));
   });
 }
 
 // Updates the header's "AVAILABLE NOW" count and "LAST SYNC" time.
-function renderHeader(state) {
-  const availableCount = state.printers.filter((p) => p.state === "available").length;
+function renderHeader(state, now) {
+  const availableCount = state.printers.filter((p) => getDisplayState(p, now) === "available").length;
   document.getElementById("available-count").textContent = `${availableCount} / ${state.printers.length}`;
 
   const syncTime = new Date(state.lastUpdated);
@@ -142,13 +165,24 @@ function renderHeader(state) {
 // Loads data/status.json once and keeps it in this single state variable.
 let appState = null;
 
+// Re-renders the already-loaded data against the current time, so the 15-minute DONE cap applies
+// without needing a fresh fetch.
+function renderNow() {
+  if (!appState) {
+    return;
+  }
+  const now = Date.now();
+  renderHeader(appState, now);
+  renderShelf(appState.printers, now);
+}
+
 async function loadStatus() {
   const response = await fetch("data/status.json");
   const data = await response.json();
   appState = data;
 
-  renderHeader(appState);
-  renderShelf(appState.printers);
+  renderNow();
 }
 
 loadStatus();
+setInterval(renderNow, RENDER_REFRESH_MS);

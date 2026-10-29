@@ -3,7 +3,7 @@
   "printers": [
     { "number": 1, "model": "X1 Carbon", "state": "printing", "progress": 68, "timeLeftMin": 42 },
     { "number": 2, "model": "X1 Carbon", "state": "printing", "progress": 23, "timeLeftMin": 135 },
-    { "number": 3, "model": "X1 Carbon", "state": "done", "progress": 100, "timeLeftMin": 0 },
+    { "number": 3, "model": "X1 Carbon", "state": "done", "progress": 100, "timeLeftMin": 0, "doneAt": "2026-10-29T19:17:50.000Z" },
     { "number": 4, "model": "X1 Carbon", "state": "printing", "progress": 91, "timeLeftMin": 8 },
     { "number": 5, "model": "X1 Carbon", "state": "paused", "progress": 45, "timeLeftMin": 80 },
     { "number": 6, "model": "X1 Carbon", "state": "printing", "progress": 37, "timeLeftMin": 65 },

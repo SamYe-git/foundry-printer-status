@@ -1,0 +1,263 @@
+:root {
+  --bg: #0a0b0a; /* page background */
+  --body: #1a1d1b; /* printer body, lighter than --bg so it reads as a box */
+  --door: #0c0e0d; /* glass door inside the printer body */
+  --text: #e8ebe9; /* primary text */
+  --dim: #7c8482; /* small labels: model name, LAST SYNC, percent under the ring */
+  --line: #2a2f2d; /* card edges and the ring's unfilled track */
+  --silver: #c4c8c6; /* shelf boards between rows */
+  --printing: #57e389; /* accent: printing state */
+  --done: #e0a93a;
+  --available: #ffffff;
+  --paused: #9aa0a6;
+  --font: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
+  --spacing: 10px; /* gap between shelf cards */
+  --radius: 4px; /* card corner radius */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  padding: 20px 14px 32px;
+}
+
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.brand-line {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--dim);
+}
+
+h1 {
+  margin: 4px 0 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+h1 .cursor {
+  color: var(--printing);
+}
+
+.sync-box {
+  text-align: right;
+  font-size: 10px;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.sync-box .big {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2px;
+}
+
+.shelf-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing);
+}
+
+.shelf-board {
+  height: 8px;
+  background: var(--silver);
+  border-radius: 2px;
+  margin: var(--spacing) 0 20px;
+}
+
+.printer {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--body);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.printer-lid {
+  height: 10%;
+  background: var(--door);
+  border-bottom: 1px solid var(--line);
+}
+
+.printer-label {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 7px 0;
+  z-index: 2;
+}
+
+.status-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.status-tag.printing {
+  color: var(--printing);
+}
+
+.status-tag.done {
+  color: var(--done);
+}
+
+.status-tag.available {
+  color: var(--available);
+}
+
+.status-tag.paused {
+  color: var(--paused);
+}
+
+.number-tag {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  padding: 0 4px;
+  border-radius: 2px;
+  transform: rotate(2deg);
+}
+
+.printer-door {
+  flex: 1;
+  margin: 20px 8px 6px;
+  background: var(--door);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ring {
+  width: 68%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(var(--ring-color, var(--printing)) calc(var(--pct, 0) * 1%), var(--line) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+}
+
+.ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.ring-text .time {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  display: block;
+}
+
+.ring-text .pct {
+  font-size: 10px;
+  color: var(--dim);
+  display: block;
+  margin-top: 2px;
+}
+
+.available-text {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--available);
+}
+
+.done-text {
+  text-align: center;
+}
+
+.done-text .big {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--done);
+  display: block;
+}
+
+.done-text .small {
+  font-size: 9px;
+  color: var(--dim);
+  display: block;
+  margin-top: 3px;
+}
+
+.paused-text {
+  text-align: center;
+}
+
+.paused-text .big {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--paused);
+  display: block;
+}
+
+.paused-text .small {
+  font-size: 9px;
+  color: var(--dim);
+  display: block;
+  margin-top: 3px;
+}
+
+.printer-screen {
+  height: 9%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7px;
+  font-size: 8px;
+  color: var(--dim);
+  border-top: 1px solid var(--line);
+  background: var(--door);
+}
+
+@media (max-width: 420px) {
+  .number-tag {
+    font-size: 13px;
+  }
+
+  .ring-text .time {
+    font-size: 13px;
+  }
+}

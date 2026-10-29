@@ -1,0 +1,14 @@
+{
+  "lastUpdated": "2026-10-29T10:42:07.000Z",
+  "printers": [
+    { "number": 1, "model": "X1 Carbon", "state": "printing", "progress": 68, "timeLeftMin": 42 },
+    { "number": 2, "model": "X1 Carbon", "state": "printing", "progress": 23, "timeLeftMin": 135 },
+    { "number": 3, "model": "X1 Carbon", "state": "done", "progress": 100, "timeLeftMin": 0 },
+    { "number": 4, "model": "X1 Carbon", "state": "printing", "progress": 91, "timeLeftMin": 8 },
+    { "number": 5, "model": "X1 Carbon", "state": "paused", "progress": 45, "timeLeftMin": 80 },
+    { "number": 6, "model": "X1 Carbon", "state": "printing", "progress": 37, "timeLeftMin": 65 },
+    { "number": 7, "model": "X1 Carbon", "state": "available", "progress": 0, "timeLeftMin": null },
+    { "number": 8, "model": "X1 Carbon", "state": "available", "progress": 0, "timeLeftMin": null },
+    { "number": 9, "model": "X1 Carbon", "state": "printing", "progress": 12, "timeLeftMin": 210 }
+  ]
+}

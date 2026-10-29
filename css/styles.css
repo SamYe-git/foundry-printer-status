@@ -1,7 +1,12 @@
 :root {
   --bg: #0a0b0a; /* page background */
-  --body: #1a1d1b; /* printer body, lighter than --bg so it reads as a box */
+  --cabinet: #121513; /* dark back panel behind the shelf rows */
+  --shelf-shade: #6f7573; /* darker bottom edge of shelf boards and side posts (metal shading) */
+  --body: #1a1d1b; /* printer body (bottom tone), lighter than --bg so it reads as a box */
+  --body-light: #262a27; /* printer body top tone, for top-to-bottom shading */
+  --lid: #343830; /* lighter strip on top of the printer body */
   --door: #0c0e0d; /* glass door inside the printer body */
+  --reflection: rgba(255, 255, 255, 0.06); /* faint diagonal reflection on the glass door */
   --text: #e8ebe9; /* primary text */
   --dim: #7c8482; /* small labels: model name, LAST SYNC, percent under the ring */
   --line: #2a2f2d; /* card edges and the ring's unfilled track */
@@ -28,7 +33,7 @@ body {
 }
 
 .wrap {
-  max-width: 640px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -71,34 +76,86 @@ h1 .cursor {
   margin-top: 2px;
 }
 
+.cabinet {
+  position: relative;
+  background: var(--cabinet);
+  padding: 24px 28px;
+  border-radius: var(--radius);
+}
+
+.post {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 14px;
+  background: linear-gradient(90deg, var(--silver), var(--shelf-shade));
+}
+
+.post-left {
+  left: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.post-right {
+  right: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
 .shelf-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing);
+  align-items: end;
+  position: relative;
+  z-index: 1;
 }
 
 .shelf-board {
-  height: 8px;
-  background: var(--silver);
-  border-radius: 2px;
-  margin: var(--spacing) 0 20px;
+  height: 16px;
+  background: linear-gradient(180deg, var(--silver) 0%, var(--silver) 45%, var(--shelf-shade) 100%);
+  border-top: 1px solid #fff;
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.6);
+  margin: 0 0 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .printer {
   position: relative;
-  aspect-ratio: 3 / 4;
-  background: var(--body);
+  aspect-ratio: 5 / 6;
+  background: linear-gradient(180deg, var(--body-light), var(--body));
   border: 1px solid var(--line);
   border-radius: var(--radius);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: visible;
+  margin-bottom: -1px; /* sit flush on the shelf board, no gap */
+}
+
+.printer::before,
+.printer::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  width: 10%;
+  height: 5px;
+  background: var(--shelf-shade);
+  border-radius: 0 0 2px 2px;
+}
+
+.printer::before {
+  left: 10%;
+}
+
+.printer::after {
+  right: 10%;
 }
 
 .printer-lid {
-  height: 10%;
-  background: var(--door);
-  border-bottom: 1px solid var(--line);
+  height: 9%;
+  margin: 5% 6% 0;
+  background: var(--lid);
+  border-radius: 2px;
 }
 
 .printer-label {
@@ -145,14 +202,24 @@ h1 .cursor {
 
 .printer-door {
   flex: 1;
-  margin: 20px 8px 6px;
+  margin: 20px 8% 8%;
   background: var(--door);
-  border: 1px solid var(--line);
+  border: 8px solid var(--body);
   border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.printer-door::after {
+  content: "";
+  position: absolute;
+  inset: -40% -10%;
+  background: linear-gradient(135deg, transparent 40%, var(--reflection) 50%, transparent 60%);
+  pointer-events: none;
 }
 
 .ring {
@@ -199,9 +266,10 @@ h1 .cursor {
 }
 
 .available-text {
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--available);
+  white-space: nowrap;
 }
 
 .done-text {
@@ -227,29 +295,36 @@ h1 .cursor {
 }
 
 .paused-text .big {
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--paused);
   display: block;
+  white-space: nowrap;
 }
 
 .paused-text .small {
-  font-size: 9px;
+  font-size: 7px;
   color: var(--dim);
   display: block;
   margin-top: 3px;
+  white-space: nowrap;
 }
 
 .printer-screen {
-  height: 9%;
+  position: absolute;
+  left: 6%;
+  bottom: 6%;
+  width: 30%;
+  height: 7%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 7px;
-  font-size: 8px;
+  justify-content: center;
+  padding: 0 4px;
+  font-size: 7px;
   color: var(--dim);
-  border-top: 1px solid var(--line);
   background: var(--door);
+  border: 1px solid var(--line);
+  border-radius: 1px;
 }
 
 @media (max-width: 420px) {

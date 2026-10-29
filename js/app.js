@@ -65,7 +65,7 @@ function fillDoorContent(door, printer) {
 
     const big = document.createElement("span");
     big.className = "big";
-    big.textContent = `II ${printer.progress}%`;
+    big.textContent = `PAUSED ${printer.progress}%`;
 
     const small = document.createElement("span");
     small.className = "small";

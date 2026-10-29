@@ -11,8 +11,18 @@ Foundry — dark cabinet, printers arranged in rows — so a student recognizes
 ```css
 :root {
   --bg: #0a0b0a; /* page background */
-  --body: #1a1d1b; /* printer body, lighter than --bg so it reads as a box */
+  --cabinet: #121513; /* dark back panel behind the shelf rows */
+  --shelf-shade: #6f7573; /* darker bottom edge of shelf boards and side posts (metal shading) */
+  --body: #1a1d1b; /* printer body (bottom tone), lighter than --bg so it reads as a box */
+  --body-light: #262a27; /* printer body top tone, for top-to-bottom shading */
+  --lid: #343830; /* lighter strip on top of the printer body */
   --door: #0c0e0d; /* glass door inside the printer body */
+  --reflection: rgba(
+    255,
+    255,
+    255,
+    0.06
+  ); /* faint diagonal reflection on the glass door */
   --text: #e8ebe9; /* primary text */
   --dim: #7c8482; /* small labels: model name, LAST SYNC, percent under the ring */
   --line: #2a2f2d; /* card edges and the ring's unfilled track */

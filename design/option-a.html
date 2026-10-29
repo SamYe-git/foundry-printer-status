@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Option A — Dark Terminal Shelf</title>
+<style>
+  :root {
+    --bg: #0a0b0a;
+    --panel: #101210;
+    --panel-2: #181b19;
+    --line: #2a2f2d;
+    --silver: #c4c8c6;
+    --text: #e8ebe9;
+    --dim: #7c8482;
+    --printing: #57e389;
+    --done: #e0a93a;
+    --free: #ffffff;
+    --paused: #9aa0a6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
+    padding: 20px 14px 32px;
+  }
+
+  .wrap { max-width: 640px; margin: 0 auto; }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .brand-line { font-size: 10px; letter-spacing: 0.12em; color: var(--dim); }
+
+  h1 {
+    margin: 4px 0 0;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  h1 .cursor { color: var(--printing); }
+
+  .sync-box { text-align: right; font-size: 10px; color: var(--dim); white-space: nowrap; }
+  .sync-box .big { display: block; font-size: 16px; font-weight: 700; color: var(--text); margin-top: 2px; }
+
+  .legend {
+    display: flex;
+    gap: 14px;
+    font-size: 10px;
+    color: var(--dim);
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 5px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+  .dot.printing { background: var(--printing); }
+  .dot.done { background: var(--done); }
+  .dot.free { background: var(--free); }
+
+  .shelf-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .shelf-board {
+    height: 8px;
+    background: linear-gradient(180deg, var(--silver), #7d8280);
+    border-radius: 2px;
+    margin: 10px 0 20px;
+    box-shadow: 0 2px 0 #000;
+    position: relative;
+  }
+  .shelf-board::before,
+  .shelf-board::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    width: 4px;
+    height: 10px;
+    background: #4a4e4c;
+  }
+  .shelf-board::before { left: 2%; }
+  .shelf-board::after { right: 2%; }
+
+  .printer {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .printer-lid {
+    height: 10%;
+    background: #1f2321;
+    border-bottom: 1px solid #000;
+  }
+
+  .printer-label {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 7px 0;
+    z-index: 2;
+  }
+
+  .status-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .status-tag.printing { color: var(--printing); }
+  .status-tag.done { color: var(--done); }
+  .status-tag.free { color: var(--free); }
+  .status-tag.paused { color: var(--paused); }
+
+  .number-tag {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    background: #fff1;
+    padding: 0 4px;
+    border-radius: 2px;
+    transform: rotate(2deg);
+  }
+
+  .printer-door {
+    flex: 1;
+    margin: 20px 8px 6px;
+    background: #0c0e0d;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .ring {
+    width: 68%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .ring::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(var(--ring-color, var(--printing)) calc(var(--pct, 50) * 1%), #23261f 0);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+  }
+  .ring-text { text-align: center; z-index: 1; }
+  .ring-text .time { font-size: 15px; font-weight: 800; color: var(--text); display: block; }
+  .ring-text .pct { font-size: 10px; color: var(--dim); display: block; margin-top: 2px; }
+
+  .free-text { font-size: 15px; font-weight: 800; color: var(--free); }
+  .done-text { text-align: center; }
+  .done-text .big { font-size: 15px; font-weight: 800; color: var(--done); display: block; }
+  .done-text .small { font-size: 9px; color: var(--dim); display: block; margin-top: 3px; }
+  .paused-text { text-align: center; }
+  .paused-text .big { font-size: 14px; font-weight: 800; color: var(--paused); display: block; }
+  .paused-text .small { font-size: 9px; color: var(--dim); display: block; margin-top: 3px; }
+
+  .obj-box { width: 86%; text-align: left; }
+  .obj-label { font-size: 9px; color: var(--dim); letter-spacing: 0.08em; margin-bottom: 5px; }
+  .obj-bar { height: 6px; background: #23261f; border-radius: 3px; overflow: hidden; margin-bottom: 5px; }
+  .obj-fill { height: 100%; background: var(--printing); }
+  .obj-meta { display: flex; justify-content: space-between; font-size: 10px; color: var(--text); }
+
+  .printer-screen {
+    height: 9%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    font-size: 8px;
+    color: var(--dim);
+    border-top: 1px solid #000;
+    background: #0e100f;
+  }
+  .printer-screen .led { width: 5px; height: 5px; border-radius: 50%; background: var(--printing); }
+
+  footer {
+    margin-top: 10px;
+    font-size: 9px;
+    color: var(--dim);
+    border-top: 1px solid var(--line);
+    padding-top: 10px;
+  }
+
+  @media (max-width: 420px) {
+    .number-tag { font-size: 13px; }
+    .ring-text .time { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <div class="brand-line">WEISSMAN FOUNDRY @ BABSON COLLEGE</div>
+        <h1>&gt; printer_status<span class="cursor">_</span></h1>
+      </div>
+      <div class="sync-box">
+        FREE NOW <span class="big">3 / 9</span>
+        LAST SYNC <span class="big">10:42:07 AM</span>
+      </div>
+    </header>
+
+    <div class="legend">
+      <span><i class="dot printing"></i> PRINTING</span>
+      <span><i class="dot done"></i> DONE, PICK UP</span>
+      <span><i class="dot free"></i> FREE</span>
+    </div>
+
+    <!-- Row 1: #1, #2, #3 -->
+    <div class="shelf-row">
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag printing">PRINTING</span>
+          <span class="number-tag">#1</span>
+        </div>
+        <div class="printer-door">
+          <div class="ring" style="--pct:68; --ring-color: var(--printing);">
+            <div class="ring-text"><span class="time">0:42</span><span class="pct">68%</span></div>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag printing">PRINTING</span>
+          <span class="number-tag">#2</span>
+        </div>
+        <div class="printer-door">
+          <div class="ring" style="--pct:23; --ring-color: var(--printing);">
+            <div class="ring-text"><span class="time">2:15</span><span class="pct">23%</span></div>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag done">DONE</span>
+          <span class="number-tag">#3</span>
+        </div>
+        <div class="printer-door">
+          <div class="done-text">
+            <span class="big">DONE</span>
+            <span class="small">waiting for pickup</span>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--done);"></span></div>
+      </div>
+    </div>
+
+    <div class="shelf-board"></div>
+
+    <!-- Row 2: #4, #5, #6 -->
+    <div class="shelf-row">
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag printing">PRINTING</span>
+          <span class="number-tag">#4</span>
+        </div>
+        <div class="printer-door">
+          <div class="ring" style="--pct:91; --ring-color: var(--printing);">
+            <div class="ring-text"><span class="time">0:08</span><span class="pct">91%</span></div>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag paused">PAUSED</span>
+          <span class="number-tag">#5</span>
+        </div>
+        <div class="printer-door">
+          <div class="paused-text">
+            <span class="big">II 45%</span>
+            <span class="small">paused by user</span>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--paused);"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag printing">PRINTING</span>
+          <span class="number-tag">#6</span>
+        </div>
+        <div class="printer-door">
+          <div class="obj-box">
+            <div class="obj-label">OBJ</div>
+            <div class="obj-bar"><div class="obj-fill" style="width: 37%;"></div></div>
+            <div class="obj-meta"><span>1:05 left</span><span>37%</span></div>
+          </div>
+        </div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
+      </div>
+    </div>
+
+    <div class="shelf-board"></div>
+
+    <!-- Row 3: #7, #8, #9 -->
+    <div class="shelf-row">
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag free">FREE</span>
+          <span class="number-tag">#7</span>
+        </div>
+        <div class="printer-door"><span class="free-text">FREE</span></div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag free">FREE</span>
+          <span class="number-tag">#8</span>
+        </div>
+        <div class="printer-door"><span class="free-text">FREE</span></div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
+      </div>
+
+      <div class="printer">
+        <div class="printer-lid"></div>
+        <div class="printer-label">
+          <span class="status-tag free">FREE</span>
+          <span class="number-tag">#9</span>
+        </div>
+        <div class="printer-door"><span class="free-text">FREE</span></div>
+        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
+      </div>
+    </div>
+
+    <div class="shelf-board"></div>
+
+    <footer>
+      Data refreshes every 30 s. Prototype with sample data. foundry.babson.edu
+    </footer>
+  </div>
+</body>
+</html>

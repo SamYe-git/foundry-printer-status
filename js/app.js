@@ -91,9 +91,6 @@ function buildPrinterCard(printer) {
   const lid = document.createElement("div");
   lid.className = "printer-lid";
 
-  const label = document.createElement("div");
-  label.className = "printer-label";
-
   const statusTag = document.createElement("span");
   statusTag.className = `status-tag ${printer.state}`;
   statusTag.textContent = STATUS_LABELS[printer.state] ?? printer.state;
@@ -102,7 +99,7 @@ function buildPrinterCard(printer) {
   numberTag.className = "number-tag";
   numberTag.textContent = `#${printer.number}`;
 
-  label.append(statusTag, numberTag);
+  lid.append(statusTag, numberTag);
 
   const doorWrap = document.createElement("div");
   doorWrap.className = "printer-door";
@@ -115,7 +112,7 @@ function buildPrinterCard(printer) {
   model.textContent = printer.model;
   screen.append(model);
 
-  card.append(lid, label, doorWrap, screen);
+  card.append(lid, doorWrap, screen);
   return card;
 }
 

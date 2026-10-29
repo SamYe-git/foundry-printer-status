@@ -156,17 +156,10 @@ h1 .cursor {
   margin: 5% 6% 0;
   background: var(--lid);
   border-radius: 2px;
-}
-
-.printer-label {
-  position: absolute;
-  top: 10%;
-  left: 0;
-  right: 0;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  padding: 6px 7px 0;
-  z-index: 2;
+  padding: 0 6px;
 }
 
 .status-tag {

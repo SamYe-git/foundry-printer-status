@@ -45,7 +45,7 @@ computer (see Later).
 
 - 12 printers total: #1–9 (PLA) on the Main Shelf, #10–12 (BYOF) on their own
   page.
-- Model: Bambu Lab X1 Carbon, for all 12 (per club organizer, subject to
+- Model: Bambu Lab X1 Carbon, for all 12 (per Foundry director, subject to
   reconfirmation).
 - Possible states: free, printing, done (waiting for pickup), paused, failed,
   offline.
@@ -54,33 +54,36 @@ computer (see Later).
 - Privacy rule: no file names, no record of who started a print, no camera
   images.
 - Refresh interval: 30 seconds.
-- Design references: [Sketch.pdf](Sketch.pdf), [Printer shelf, dark terminal.pdf](Printer%20shelf%2C%20dark%20terminal.pdf).
+- Design references: [sketch.pdf](design/sketch.pdf), [mockup-dark-terminal.pdf](design/mockup-dark-terminal.pdf).
 
 **Missing:**
 
 - Real live data feed / connection method for the 12 printers — from: Foundry
   administrator and professor (in progress).
-- Confirmation that Printers #10–12 are X1 Carbon — from: club
-  organizer/you.
+- Confirmation that Printers #10–12 are X1 Carbon — from: Foundry
+  director/you.
 - Starting sample data for the hand-edited data file, so V1 can be built and
   tested before the real feed exists — from: you.
 
 ## Look
 
-See `DESIGN.md` (to be written from Sketch.pdf and Printer shelf, dark
-terminal.pdf).
+See `DESIGN.md` (to be written from design/sketch.pdf and
+design/mockup-dark-terminal.pdf).
 
 ## States
 
 - **Ideal:** All cards show live state, progress, and time left; header shows
   an accurate free count and a recent last-sync time.
 - **Loading:** First load, before the data file finishes fetching — cards
-  show as blue placeholder shapes.
+  show as placeholder shapes.
 - **Error:** The data file fails to load entirely — the shelf is replaced by
-  a red "Status unavailable" message.
+  a "Status unavailable" message.
 - **Partial:** The data file loads but is missing or has malformed entries
   for some printers — known printers render normally; the rest show a "No
   data" placeholder card instead of breaking the page.
+- **Stale:** The data file loads, but its last-updated time is more than one
+  hour old. Printers still show, and a banner at the top says "Data may be
+  out of date".
 - **Empty:** The data file loads but lists no printer entries at all (e.g.
   misconfigured) — the shelf shows a "No printer data configured" message.
 

@@ -193,7 +193,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 7px;
+    padding: 0 7px;for
     font-size: 8px;
     color: var(--dim);
     border-top: 1px solid #000;
@@ -223,7 +223,7 @@
         <h1>&gt; printer_status<span class="cursor">_</span></h1>
       </div>
       <div class="sync-box">
-        FREE NOW <span class="big">3 / 9</span>
+        AVAILABLE NOW <span class="big" id="free-count">— / 9</span>
         LAST SYNC <span class="big">10:42:07 AM</span>
       </div>
     </header>
@@ -231,145 +231,89 @@
     <div class="legend">
       <span><i class="dot printing"></i> PRINTING</span>
       <span><i class="dot done"></i> DONE, PICK UP</span>
-      <span><i class="dot free"></i> FREE</span>
+      <span><i class="dot free"></i> AVAILABLE</span>
     </div>
 
-    <!-- Row 1: #1, #2, #3 -->
-    <div class="shelf-row">
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag printing">PRINTING</span>
-          <span class="number-tag">#1</span>
-        </div>
-        <div class="printer-door">
-          <div class="ring" style="--pct:68; --ring-color: var(--printing);">
-            <div class="ring-text"><span class="time">0:42</span><span class="pct">68%</span></div>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag printing">PRINTING</span>
-          <span class="number-tag">#2</span>
-        </div>
-        <div class="printer-door">
-          <div class="ring" style="--pct:23; --ring-color: var(--printing);">
-            <div class="ring-text"><span class="time">2:15</span><span class="pct">23%</span></div>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag done">DONE</span>
-          <span class="number-tag">#3</span>
-        </div>
-        <div class="printer-door">
-          <div class="done-text">
-            <span class="big">DONE</span>
-            <span class="small">waiting for pickup</span>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--done);"></span></div>
-      </div>
-    </div>
-
+    <div class="shelf-row" id="shelf-row-1"></div>
     <div class="shelf-board"></div>
-
-    <!-- Row 2: #4, #5, #6 -->
-    <div class="shelf-row">
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag printing">PRINTING</span>
-          <span class="number-tag">#4</span>
-        </div>
-        <div class="printer-door">
-          <div class="ring" style="--pct:91; --ring-color: var(--printing);">
-            <div class="ring-text"><span class="time">0:08</span><span class="pct">91%</span></div>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag paused">PAUSED</span>
-          <span class="number-tag">#5</span>
-        </div>
-        <div class="printer-door">
-          <div class="paused-text">
-            <span class="big">II 45%</span>
-            <span class="small">paused by user</span>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--paused);"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag printing">PRINTING</span>
-          <span class="number-tag">#6</span>
-        </div>
-        <div class="printer-door">
-          <div class="obj-box">
-            <div class="obj-label">OBJ</div>
-            <div class="obj-bar"><div class="obj-fill" style="width: 37%;"></div></div>
-            <div class="obj-meta"><span>1:05 left</span><span>37%</span></div>
-          </div>
-        </div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led"></span></div>
-      </div>
-    </div>
-
+    <div class="shelf-row" id="shelf-row-2"></div>
     <div class="shelf-board"></div>
-
-    <!-- Row 3: #7, #8, #9 -->
-    <div class="shelf-row">
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag free">FREE</span>
-          <span class="number-tag">#7</span>
-        </div>
-        <div class="printer-door"><span class="free-text">FREE</span></div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag free">FREE</span>
-          <span class="number-tag">#8</span>
-        </div>
-        <div class="printer-door"><span class="free-text">FREE</span></div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
-      </div>
-
-      <div class="printer">
-        <div class="printer-lid"></div>
-        <div class="printer-label">
-          <span class="status-tag free">FREE</span>
-          <span class="number-tag">#9</span>
-        </div>
-        <div class="printer-door"><span class="free-text">FREE</span></div>
-        <div class="printer-screen"><span>X1 CARBON</span><span class="led" style="background: var(--free);"></span></div>
-      </div>
-    </div>
-
+    <div class="shelf-row" id="shelf-row-3"></div>
     <div class="shelf-board"></div>
 
     <footer>
       Data refreshes every 30 s. Prototype with sample data. foundry.babson.edu
     </footer>
   </div>
+
+  <script>
+    // Sample data stands in for the real feed (see PRD "Content and data").
+    const printers = [
+      { num: 1, model: 'X1 CARBON', status: 'printing', pct: 68, time: '0:42', ring: 'loop' },
+      { num: 2, model: 'X1 CARBON', status: 'printing', pct: 23, time: '2:15', ring: 'loop' },
+      { num: 3, model: 'X1 CARBON', status: 'done' },
+      { num: 4, model: 'X1 CARBON', status: 'printing', pct: 91, time: '0:08', ring: 'loop' },
+      { num: 5, model: 'X1 CARBON', status: 'paused', pct: 45 },
+      { num: 6, model: 'X1 CARBON', status: 'printing', pct: 37, time: '1:05', ring: 'loop' },
+      { num: 7, model: 'X1 CARBON', status: 'free' },
+      { num: 8, model: 'X1 CARBON', status: 'free' },
+      { num: 9, model: 'X1 CARBON', status: 'free' },
+    ];
+
+    const statusLabels = { printing: 'PRINTING', done: 'DONE', paused: 'PAUSED', free: 'AVAILABLE' };
+
+    function doorHTML(p) {
+      if (p.status === 'printing' && p.ring === 'bar') {
+        return `<div class="obj-box">
+            <div class="obj-label">OBJ</div>
+            <div class="obj-bar"><div class="obj-fill" style="width: ${p.pct}%;"></div></div>
+            <div class="obj-meta"><span>${p.time} left</span><span>${p.pct}%</span></div>
+          </div>`;
+      }
+      if (p.status === 'printing') {
+        return `<div class="ring" style="--pct:${p.pct}; --ring-color: var(--printing);">
+            <div class="ring-text"><span class="time">${p.time}</span><span class="pct">${p.pct}%</span></div>
+          </div>`;
+      }
+      if (p.status === 'done') {
+        return `<div class="done-text"><span class="big">DONE</span><span class="small">waiting for pickup</span></div>`;
+      }
+      if (p.status === 'paused') {
+        return `<div class="paused-text"><span class="big">II ${p.pct}%</span><span class="small">paused by user</span></div>`;
+      }
+      return `<span class="free-text">AVAILABLE</span>`;
+    }
+
+    function ledStyle(status) {
+      if (status === 'printing') return '';
+      return `background: var(--${status});`;
+    }
+
+    function cardHTML(p) {
+      return `
+        <div class="printer">
+          <div class="printer-lid"></div>
+          <div class="printer-label">
+            <span class="status-tag ${p.status}">${statusLabels[p.status]}</span>
+            <span class="number-tag">#${p.num}</span>
+          </div>
+          <div class="printer-door">${doorHTML(p)}</div>
+          <div class="printer-screen"><span>${p.model}</span><span class="led" style="${ledStyle(p.status)}"></span></div>
+        </div>`;
+    }
+
+    const rows = [
+      document.getElementById('shelf-row-1'),
+      document.getElementById('shelf-row-2'),
+      document.getElementById('shelf-row-3'),
+    ];
+
+    printers.forEach((p, i) => {
+      rows[Math.floor(i / 3)].insertAdjacentHTML('beforeend', cardHTML(p));
+    });
+
+    const freeCount = printers.filter((p) => p.status === 'free').length;
+    document.getElementById('free-count').textContent = `${freeCount} / ${printers.length}`;
+  </script>
 </body>
 </html>

@@ -28,9 +28,14 @@ Foundry — dark cabinet, printers arranged in rows — so a student recognizes
   --line: #2a2f2d; /* card edges and the ring's unfilled track */
   --silver: #c4c8c6; /* shelf boards between rows */
   --printing: #57e389; /* accent: printing state */
+  --ring-printing: #2f6b4a; /* muted, darker printing green used only for the ring fill */
   --done: #e0a93a;
   --available: #ffffff;
   --paused: #9aa0a6;
+  --spool-black: #3a3f3c; /* filament block fill for "black" filament */
+  --spool-white: #f2f4f3; /* filament block fill for "white" filament */
+  --flange-light: #b8bdc1; /* spool flanges on black filament */
+  --flange-dark: #8d9397; /* spool flanges on white filament */
   --font: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
   --spacing: 10px; /* gap between shelf cards */
   --radius: 4px; /* card corner radius */
@@ -47,6 +52,14 @@ shows a ring progress in the center of the door — time left in the middle,
 percent just below it — no exceptions, so #1–9 all read the same way when
 printing. A printer with nothing printing is labeled **"AVAILABLE"** instead
 of a ring.
+
+## Filament spool
+
+A small side-view filament spool stands on the shelf board to the left of
+each printer, same size on desktop and phone: two fixed-size flanges (6px
+wide, 48px tall, rounded ends) with a filament block (18px wide, 38px tall)
+centered between them, colored by `--spool-black`/`--spool-white` with
+`--flange-light`/`--flange-dark` rims — no lines or texture.
 
 ## States
 

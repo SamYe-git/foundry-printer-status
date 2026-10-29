@@ -21,8 +21,8 @@ current.
   the last time the data was synced.
 - A 3×3 grid of cards for Printers #1–9 (PLA). Each card shows: printer
   number, model, current state (free / printing / done-waiting-for-pickup /
-  paused / failed / offline), and — when printing or done — progress % and
-  estimated time left.
+  paused / failed / offline), filament color, and — when printing or done —
+  progress % and estimated time left.
 - A link to the BYOF Shelf page.
 - Cards are view-only (not clickable) in V1.
 - Page auto-refreshes from a data file every 30 seconds, no reload needed.
@@ -115,4 +115,4 @@ design/mockup-dark-terminal.pdf).
   professor confirm a connection method.
 - Per-printer last-updated timestamps, to catch a single printer going
   silent.
-- Clickable printer cards showing full description (e.g. filament color).
+- Clickable printer cards showing full description.

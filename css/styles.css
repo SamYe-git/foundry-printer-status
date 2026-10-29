@@ -12,9 +12,14 @@
   --line: #2a2f2d; /* card edges and the ring's unfilled track */
   --silver: #c4c8c6; /* shelf boards between rows */
   --printing: #57e389; /* accent: printing state */
+  --ring-printing: #2f6b4a; /* muted, darker printing green used only for the ring fill */
   --done: #e0a93a;
   --available: #ffffff;
   --paused: #9aa0a6;
+  --spool-black: #3a3f3c; /* filament block fill for "black" filament */
+  --spool-white: #f2f4f3; /* filament block fill for "white" filament */
+  --flange-light: #b8bdc1; /* spool flanges on black filament */
+  --flange-dark: #8d9397; /* spool flanges on white filament */
   --font: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
   --spacing: 10px; /* gap between shelf cards */
   --radius: 4px; /* card corner radius */
@@ -63,14 +68,14 @@ h1 .cursor {
 
 .sync-box {
   text-align: right;
-  font-size: 10px;
+  font-size: 13px;
   color: var(--dim);
   white-space: nowrap;
 }
 
 .sync-box .big {
   display: block;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
   margin-top: 2px;
@@ -162,6 +167,66 @@ h1 .cursor {
   padding: 0 6px;
 }
 
+.printer-slot {
+  display: flex;
+  align-items: flex-end;
+  gap: 4%;
+}
+
+.printer-slot .printer {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Side view of a filament spool: two flanges with the filament block between them, fixed sizes
+   so it looks the same on desktop and phone. */
+.spool {
+  flex-shrink: 0;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.spool-flange {
+  width: 6px;
+  height: 48px;
+  border-radius: 3px;
+}
+
+.spool-core {
+  width: 18px;
+  height: 38px;
+}
+
+.spool--black .spool-flange {
+  background: var(--flange-light);
+}
+
+.spool--black .spool-core {
+  background: var(--spool-black);
+}
+
+.spool--white .spool-flange {
+  background: var(--flange-dark);
+}
+
+.spool--white .spool-core {
+  background: var(--spool-white);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .status-tag {
   font-size: 10px;
   font-weight: 700;
@@ -228,7 +293,7 @@ h1 .cursor {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: conic-gradient(var(--ring-color, var(--printing)) calc(var(--pct, 0) * 1%), var(--line) 0);
+  background: conic-gradient(var(--ring-color, var(--ring-printing)) calc(var(--pct, 0) * 1%), var(--line) 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
           mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
 }

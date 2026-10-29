@@ -41,7 +41,7 @@ function fillDoorContent(door, printer, displayState) {
     const ring = document.createElement("div");
     ring.className = "ring";
     ring.style.setProperty("--pct", printer.progress);
-    ring.style.setProperty("--ring-color", "var(--printing)");
+    ring.style.setProperty("--ring-color", "var(--ring-printing)");
 
     const ringText = document.createElement("div");
     ringText.className = "ring-text";
@@ -100,6 +100,28 @@ function fillDoorContent(door, printer, displayState) {
   door.append(availableText);
 }
 
+// Builds the side-view filament spool icon that stands next to a printer on the shelf.
+function buildFilamentSpool(printer) {
+  const spool = document.createElement("div");
+  spool.className = `spool spool--${printer.filament}`;
+
+  const leftFlange = document.createElement("div");
+  leftFlange.className = "spool-flange";
+
+  const core = document.createElement("div");
+  core.className = "spool-core";
+
+  const rightFlange = document.createElement("div");
+  rightFlange.className = "spool-flange";
+
+  const label = document.createElement("span");
+  label.className = "visually-hidden";
+  label.textContent = `Filament: ${printer.filament} PLA`;
+
+  spool.append(leftFlange, core, rightFlange, label);
+  return spool;
+}
+
 // Builds one printer card element from a single printer's data.
 function buildPrinterCard(printer, now) {
   const displayState = getDisplayState(printer, now);
@@ -149,7 +171,12 @@ function renderShelf(printers, now) {
 
   printers.forEach((printer, index) => {
     const rowIndex = Math.floor(index / 3);
-    rows[rowIndex].append(buildPrinterCard(printer, now));
+
+    const slot = document.createElement("div");
+    slot.className = "printer-slot";
+    slot.append(buildFilamentSpool(printer), buildPrinterCard(printer, now));
+
+    rows[rowIndex].append(slot);
   });
 }
 

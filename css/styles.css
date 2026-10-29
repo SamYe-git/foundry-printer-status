@@ -107,7 +107,7 @@ h1 .cursor {
 
 .shelf-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--spacing);
   align-items: end;
   position: relative;
@@ -384,12 +384,111 @@ h1 .cursor {
   border-radius: 1px;
 }
 
-@media (max-width: 420px) {
+/* Phone: keep the 3×3 shelf, but tighten the frame and scale card text so it fits the smaller cards. */
+@media (max-width: 480px) {
+  body {
+    padding: 16px 10px 24px;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sync-box {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-auto-flow: column;
+    justify-content: start;
+    column-gap: 24px;
+    text-align: left;
+    font-size: 11px;
+  }
+
+  .sync-box .big {
+    font-size: 18px;
+  }
+
+  .cabinet {
+    padding: 14px 14px;
+  }
+
+  .post {
+    width: 8px;
+  }
+
+  .shelf-board {
+    height: 10px;
+    margin-bottom: 14px;
+  }
+
+  .printer-slot {
+    gap: 3px;
+  }
+
+  .printer-lid {
+    padding: 0 3px;
+  }
+
+  .status-tag {
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+
   .number-tag {
-    font-size: 13px;
+    font-size: 11px;
+    padding: 0;
+  }
+
+  .printer-door {
+    margin: 6px 6% 15px;
+    border-width: 4px;
+    padding: 0 2px;
+  }
+
+  .ring {
+    width: 82%;
+  }
+
+  .ring::before {
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
   }
 
   .ring-text .time {
-    font-size: 13px;
+    font-size: 10px;
+  }
+
+  .ring-text .pct {
+    font-size: 7px;
+    margin-top: 0;
+  }
+
+  .available-text {
+    font-size: 8px;
+  }
+
+  .done-text .big {
+    font-size: 11px;
+  }
+
+  .done-text .small {
+    font-size: 6px;
+  }
+
+  .paused-text .big {
+    font-size: 7px;
+  }
+
+  .paused-text .small {
+    font-size: 5px;
+  }
+
+  .printer-screen {
+    width: 60%;
+    padding: 0 2px;
+    font-size: 6px;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

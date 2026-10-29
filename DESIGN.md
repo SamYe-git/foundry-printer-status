@@ -82,6 +82,9 @@ centered between them, colored by `--spool-black`/`--spool-white` with
 ## Phone rules (390px)
 
 The 3×3 grid keeps its 3-column layout at 390px (cards simply shrink); it
-does not stack to 1 column. Only type sizes adjust: the printer number tag
-and the ring's time text step down slightly so they stay inside the smaller
-card without wrapping or overflowing.
+does not stack to 1 column. Below 480px the frame tightens (smaller page,
+cabinet and door padding; thinner posts, shelf boards and ring track) and
+the header stacks, with AVAILABLE NOW and LAST SYNC side by side under the
+title. All card text (status word, number tag, ring time/percent, door
+labels, model screen) steps down so it stays inside the smaller card without
+wrapping or overflowing. The spool keeps its fixed size.

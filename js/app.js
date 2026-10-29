@@ -41,7 +41,7 @@ function fillDoorContent(door, printer, displayState) {
     const ring = document.createElement("div");
     ring.className = "ring";
     ring.style.setProperty("--pct", printer.progress);
-    ring.style.setProperty("--ring-color", "var(--ring-printing)");
+    ring.style.setProperty("--ring-color", "var(--printing)");
 
     const ringText = document.createElement("div");
     ringText.className = "ring-text";

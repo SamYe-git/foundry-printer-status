@@ -12,7 +12,6 @@
   --line: #2a2f2d; /* card edges and the ring's unfilled track */
   --silver: #c4c8c6; /* shelf boards between rows */
   --printing: #57e389; /* accent: printing state */
-  --ring-printing: #2f6b4a; /* muted, darker printing green used only for the ring fill */
   --done: #e0a93a;
   --available: #ffffff;
   --paused: #9aa0a6;
@@ -293,7 +292,7 @@ h1 .cursor {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: conic-gradient(var(--ring-color, var(--ring-printing)) calc(var(--pct, 0) * 1%), var(--line) 0);
+  background: conic-gradient(var(--ring-color, var(--printing)) calc(var(--pct, 0) * 1%), var(--line) 0);
   -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
           mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
 }

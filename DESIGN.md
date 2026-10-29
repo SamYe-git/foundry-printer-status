@@ -28,7 +28,6 @@ Foundry — dark cabinet, printers arranged in rows — so a student recognizes
   --line: #2a2f2d; /* card edges and the ring's unfilled track */
   --silver: #c4c8c6; /* shelf boards between rows */
   --printing: #57e389; /* accent: printing state */
-  --ring-printing: #2f6b4a; /* muted, darker printing green used only for the ring fill */
   --done: #e0a93a;
   --available: #ffffff;
   --paused: #9aa0a6;

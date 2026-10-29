@@ -11,16 +11,21 @@ Foundry — dark cabinet, printers arranged in rows — so a student recognizes
 ```css
 :root {
   --bg: #0a0b0a; /* page background */
+  --body: #1a1d1b; /* printer body, lighter than --bg so it reads as a box */
+  --door: #0c0e0d; /* glass door inside the printer body */
   --text: #e8ebe9; /* primary text */
+  --dim: #7c8482; /* small labels: model name, LAST SYNC, percent under the ring */
+  --line: #2a2f2d; /* card edges and the ring's unfilled track */
+  --silver: #c4c8c6; /* shelf boards between rows */
   --printing: #57e389; /* accent: printing state */
-  font-family: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
+  --done: #e0a93a;
+  --available: #ffffff;
+  --paused: #9aa0a6;
+  --font: "SFMono-Regular", "Menlo", "Consolas", "Courier New", monospace;
   --spacing: 10px; /* gap between shelf cards */
   --radius: 4px; /* card corner radius */
 }
 ```
-
-Other status colors used on cards: **done** `#e0a93a` (amber), **available**
-`#ffffff` (white).
 
 ## The printer box
 
